@@ -1,0 +1,73 @@
+VIM un editor de texto para el terminal.
+
+Vim dispone de varios "modos" de funcionamiento.
+
+# Modo Normal
+
+El modo inicial es el denominado "normal". En este modo las teclas
+tienen asociadas "acciones". Es decir al pulsar una tecla en
+lugar de introducir texto, se ejecutará una acción.
+
+# Modo Inserción
+El modo "inserción" nos permite introducir texto. Se puede pasar a
+modo inserción pulsando una de estas teclas.
++ i Permite insertar texto en la posición actual del cursor.
++ I Permite insertar texto al principio de la línea actual.
++ a Permite insertar texto en la siguiente posición del cursor.
++ A Permite insertar texto al final de la línea actual.
+
+Para volver al modo normal hay que pulsar la tecla "ESC".
+
+# Modo Comando
+El tercer modo imprescindible es el modo comando. Se puede pasar
+a modo comando desde el modo "normal" pulsando ":".
+
+El número de posibles comandos de "vim" es enorme. Tan solo vamos
+a ver los básicos.
+
+:q Salir del programa sólo si no ha habido modificaciones en el texto.
+:w Guardar las modificaciones en el archivo abierto. Si no tenemos abierto
+   un archivo deberemos usar :w <ruta/nombre_de_archivo>
+
+Podemos combinar varios comandos en una línea, así
+:wq
+Guarda los cambios efectuado y después cierra el programa.
+
+# Modo grabación
+
+No es exactamente un "modo" sino que permite grabar un grupo de 
+pulsaciones en el modo normal.
+Para activar la grabación, desde el modo normal deberemos
+pulsar: q<letra>, para parar la grabación pulsaremos de
+nuevo q. Para reproducir la grabación pulsaremos Alt-Gr + <letra>.
+Siendo letra, la misma que hemos utilizado para iniciar
+la grabación.
+
+# Modo Visual
+
+Este modo se utiliza para selecciónar texto, sobre el que podemos
+realizar diferentes acciones.
+Su uso más básico es el de "copiar" y "pegar".
+Para entrar en modo visual pulsaremos v desde la
+posición inicial del texto que queremos selecciónar.
+Si preferimos seleccionar líneas enteras, utilizaremos
+Mayus+v y si queremos seleccionar un bloque (región rectangular) de
+texto pulsaremos Ctrl+v.
+
+Para guardar el texto seleccionado utilizaremos y.
+Para salir del modo visual pulsaremos v de nuevo.
+
+Desde el modo normal podemos pegar el texto con p o P.
+
+# Ayuda.
+La tecla F1 nos permite abrir un buffer nuevo con la
+información de ayuda.
+Al pulsarla tendremos 2 buffers abiertos, el de edición
+de nuestro texto y el de ayuda.
+El buffer de ayuda es de sólo lectura. Para cerrarlo
+desde el modo normal pulsaremos :q
+
+
+Esto es una prueba.
+Esto es una prueba.
+
