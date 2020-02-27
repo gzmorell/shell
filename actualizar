@@ -1,0 +1,30 @@
+#!/usr/bin/bash
+
+# Script to upgrade debian based distributions
+
+sudo apt update | tee /tmp/temp_apt_update.txt
+actualizacion=$(grep "can be upgraded" /tmp/temp_apt_update.txt)
+rm /tmp/temp_apt_update.txt
+echo
+if [ "$actualizacion" != "" ] ; then
+    echo "There are packages to update";
+    echo
+    apt list --upgradable
+    echo 
+    read -p "Proceed with update (y/n) ? " answer
+    echo
+    if [ "$answer" == "y" ] ; then
+        echo "Updating ..."
+        sudo apt upgrade
+        echo
+        if [ "$?" -eq "0" ]; then
+            echo "System updated. Bye!"
+        else
+            echo "Something has failed !!!"
+        fi
+    else
+        echo "Update canceled"
+    fi
+else
+    echo "Nothing to update"
+fi
