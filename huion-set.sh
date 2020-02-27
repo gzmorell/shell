@@ -1,4 +1,7 @@
 #!/bin/bash
+# Program to attach a screen to a huion tablet
+# Francisco Gonzalez
+#
 session=$(loginctl list-sessions | grep -m 1 $USER | awk '{print $1}')
 echo "Session: " $session
 x=$(loginctl show-session $session | grep Type) 
