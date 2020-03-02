@@ -1,7 +1,4 @@
 #!/bin/bash
-# Program to attach a screen to a huion tablet
-# Francisco Gonzalez
-#
 session=$(loginctl list-sessions | grep -m 1 $USER | awk '{print $1}')
 echo "Session: " $session
 x=$(loginctl show-session $session | grep Type) 
@@ -36,7 +33,7 @@ echo
 read -p "Enter screen number : " screen
 screen=$((screen-1))
 $(xinput map-to-output $pen ${selection[$screen]})
-echo $x
+x=$?
 if [ "$x" -eq "0" ]; then
     echo "Huion confined to screen: ${selection[$screen]}"
 else
