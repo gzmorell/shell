@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+#
+# Script to manage sessions of tmux and to store them
+# needs the resurrect plugin to work
+#
+
+SESSION_NAME="$1"
+RESURRECT_PATH="$HOME/.tmux/resurrect"
+SESSION_PATH="$RESURRECT_PATH/$SESSION_NAME"
+LAST_PATH="$RESURRECT_PATH/last"
+TIMESTAMP_FORMAT="+%Y%m%d%H%M%S"
+if [ "$SESSION_NAME" == "" ]; then
+    echo "Usage: tmx <session_name>"
+    exit 1
+fi
+
+INIT_TIMESTAMP=$(date -r "$LAST_PATH" "$TIMESTAMP_FORMAT")
+
+if [ -f "$SESSION_PATH" ] ; then
+    cp "$SESSION_PATH" "$LAST_PATH"
+fi
+
+tmux new -s "$SESSION_NAME"
+
+FINAL_TIMESTAMP=$(date -r "$LAST_PATH" "$TIMESTAMP_FORMAT")
+if [ "$FINAL_TIMESTAMP" -gt "$INIT_TIMESTAMP" ] ; then
+    echo "File newer"
+    sed 's/\/home\/gzmorell\/\.stack\/programs\/x86_64-linux.*$/stack ghci/' "$LAST_PATH" > "$SESSION_PATH"
+    exit 0
+else
+    echo "File not newer"
+    exit 2
+fi
+
