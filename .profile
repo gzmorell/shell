@@ -16,6 +16,16 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+if [ -d "$HOME/.node_modules/bin" ] ; then
+    PATH="$HOME/.node_modules/bin:$PATH"
+    export npm_config_prefix=~/.node_modules
+fi
+
+# set path for haskell stack bins
+#if [ -d "/home/gzmorell/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.2/bin" ] ; then
+#    PATH="$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.2/bin:$PATH"
+#    fi
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
@@ -26,4 +36,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# set path for ghcup
+if [ -d "$HOME/.ghcup/bin" ] ; then
+    PATH="$HOME/.cabal/bin:${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/bin:$PATH"
+fi
+
 export PATH="$HOME/.cargo/bin:$PATH"
+export QT_STYLE_OVERRIDE=kvantum
