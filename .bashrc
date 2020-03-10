@@ -91,7 +91,10 @@ fi
 #alias ll='ls -l'
 #alias la='ls -A'
 #alias l='ls -CF'
-alias cdd='cd ~/Develop'
+
+function cdd {
+    cd ~/Develop/"$1"
+}
 alias cdr='cd ~/Develop/rust'
 alias cds='cd /dev/shm'
 
@@ -103,6 +106,12 @@ alias cds='cd /dev/shm'
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
+if [ -f ~/.config/exercism/exercism_completion.bash ]; then
+    source ~/.config/exercism/exercism_completion.bash
+fi
+
+eval "$(stack --bash-completion-script stack)"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
