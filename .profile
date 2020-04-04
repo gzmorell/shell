@@ -22,9 +22,9 @@ if [ -d "$HOME/.node_modules/bin" ] ; then
 fi
 
 # set path for haskell stack bins
-#if [ -d "/home/gzmorell/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.2/bin" ] ; then
+#if [ -d "$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.2/bin" ] ; then
 #    PATH="$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.2/bin:$PATH"
-#    fi
+#fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
@@ -41,5 +41,24 @@ if [ -d "$HOME/.ghcup/bin" ] ; then
     PATH="$HOME/.cabal/bin:${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/bin:$PATH"
 fi
 
-export PATH="$HOME/.cargo/bin:$PATH"
-export QT_STYLE_OVERRIDE=kvantum
+# set go bin directory
+if [ -d "$HOME/go/bin" ] ; then
+    PATH="$HOME/go/bin:$PATH"
+fi
+
+# set krazy2 directory
+if [ -d "$HOME/.local/krazy2/bin" ] ; then
+    PATH="$HOME/.local/krazy2/bin:$PATH"
+fi
+
+if [ -d "$HOME/.config/nvm" ]; then
+    export NVM_DIR="$HOME/.config/nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+if [ -d "$HOME/.cargo/bin" ]; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# Solo si existe kvantum
+#export QT_STYLE_OVERRIDE=kvantum
