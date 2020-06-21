@@ -60,7 +60,7 @@ echo "" >> "$MAINFILE"
 # Create run script
 echo "#!/bin/sh" >> "$RUNFILE"
 echo "clear" >> "$RUNFILE"
-echo "if [ \"\$1\" == \"clean\" ]; then" >> "$RUNFILE"
+echo "if [ \"\$1x\" = \"cleanx\" ]; then" >> "$RUNFILE"
 echo "  rm -rf build" >> "$RUNFILE"
 echo "  rm -rf compile_commands.json" >> $RUNFILE
 echo "  exit" >> "$RUNFILE"
