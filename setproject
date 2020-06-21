@@ -1,0 +1,82 @@
+#!/usr/bin/sh
+function usage()
+{
+  echo "Usage: $0 <project name> <project description>";
+}
+
+if [ $# -lt 2 ]; then
+  usage
+  exit
+fi
+PROJECT="$1"
+DESCRIPTION="$2"
+CMAKEFILE="CMakeLists.txt"
+MAINFILE="main.cpp"
+RUNFILE="run"
+if [ -f "$CMAKEFILE" ]; then
+  rm "$CMAKEFILE"
+fi
+if [ -f "$MAINFILE" ]; then
+  rm "$MAINFILE"
+fi
+if [ -f "$RUNFILE" ]; then
+  rm "$RUNFILE"
+fi
+touch "$CMAKEFILE"
+touch "$MAINFILE"
+touch "$RUNFILE"
+
+# Create CMakeLists.txt file
+echo "cmake_minimum_required(VERSION 3.6)" >> "$CMAKEFILE"
+echo "project($PROJECT VERSION 1.0" >> "$CMAKEFILE"
+echo "              DESCRIPTION \"$DESCRIPTION\"" >> "$CMAKEFILE"
+echo "              LANGUAGES CXX)" >> "$CMAKEFILE"
+echo "set(CMAKE_CXX_STANDARD 20)" >> "$CMAKEFILE"
+echo "set(CMAKE_CXX_STANDARD_REQUIRED ON)" >> "$CMAKEFILE"
+echo "set(CMAKE_EXPORT_COMPILE_COMMANDS ON)" >> "$CMAKEFILE"
+echo "set(CMAKE_CXX_COMPILER "/usr/bin/g++")" >> "$CMAKEFILE"
+echo "set(CMAKE_BUILD_TYPE Release)" >> "$CMAKEFILE"
+echo "include(CTest)" >> "$CMAKEFILE"
+echo "enable_testing()" >> "$CMAKEFILE"
+echo "set(SRC_LIST main.cpp)" >> "$CMAKEFILE"
+echo "set(HDR_LIST)" >> "$CMAKEFILE"
+echo "add_executable(\${PROJECT_NAME} \${SRC_LIST} \${HDR_LIST})" >> "$CMAKEFILE"
+echo "set(CPACK_PROJECT_NAME \${PROJECT_NAME})" >> "$CMAKEFILE"
+echo "set(CPACK_PROJECT_VERSION \${PROJECT_VERSION})" >> "$CMAKEFILE"
+echo "include(CPack)" >> "$CMAKEFILE"
+
+# Create main.cpp file
+echo "#include <iostream>" >> "$MAINFILE"
+echo "" >> "$MAINFILE"
+echo "// $DESCRIPTION." >> "$MAINFILE"
+echo "" >> "$MAINFILE"
+echo "int main()" >> "$MAINFILE"
+echo "{" >> "$MAINFILE"
+echo "  std::cout << \"Hello C++ World!\" << std::endl;" >> "$MAINFILE"
+echo "  return 0;" >> "$MAINFILE"
+echo "}" >> "$MAINFILE"
+echo "" >> "$MAINFILE"
+
+# Create run script
+echo "#!/bin/sh" >> "$RUNFILE"
+echo "clear" >> "$RUNFILE"
+echo "if [ \"\$1\" == \"clean\" ]; then" >> "$RUNFILE"
+echo "  rm -rf build" >> "$RUNFILE"
+echo "  rm -rf compile_commands.json" >> $RUNFILE
+echo "  exit" >> "$RUNFILE"
+echo "fi" >> "$RUNFILE"
+echo "if [ ! -d build ]; then" >> "$RUNFILE"
+echo "  mkdir build" >> "$RUNFILE"
+echo "fi" >> "$RUNFILE"
+echo "cd build" >> "$RUNFILE"
+echo "cmake .. && make" >> "$RUNFILE"
+echo "echo" >> "$RUNFILE"
+echo "echo \"+++ Running program $PROJECT\"" >> "$RUNFILE"
+echo "echo" >> "$RUNFILE"
+echo "./$PROJECT" >> "$RUNFILE"
+echo "echo" >> "$RUNFILE"
+echo "if [ ! -f ../compile_commands.json ]; then" >> "$RUNFILE"
+echo "  ln -s build/compile_commands.json ../compile_commands.json " >> "$RUNFILE"
+echo "fi" >> "$RUNFILE"
+echo "" >> "$RUNFILE"
+chmod +x run
